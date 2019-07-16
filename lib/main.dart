@@ -7,6 +7,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -33,8 +34,32 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-
-      ),
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              new Card(
+                elevation: 25.0,
+                child: new Container(
+                  width: MediaQuery.of(context).size.width / 1.3,
+                  height: MediaQuery.of(context).size.height / 2.5,
+                  child: Image.asset
+                    (
+                    'assets/cover.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              new RaisedButton(
+                onPressed: (){
+                  Navigator.pop(context);
+                },
+                child: new Text('Start quiz'),
+                color: Colors.blue,
+                textColor: Colors.white,
+              )
+            ],
+          ),
+      )
     );
   }
 }
