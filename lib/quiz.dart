@@ -2,18 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_quiz_app/question.dart';
 import 'main.dart';
 
-class Quiz extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return new Scaffold(
-      body: QuizPage(),
-    );
-  }
-
-}
-
-class QuizPage extends StatefulWidget{
+class Quiz extends StatefulWidget{
 
   @override
   State<StatefulWidget> createState() {
@@ -23,7 +12,7 @@ class QuizPage extends StatefulWidget{
 
 }
 
-class _QuizPage extends State<QuizPage>{
+class _QuizPage extends State<Quiz>{
   List<Question> questions = [
     new Question('Is it Belgium flag?', true, 'assets/flags/be.png'),
     new Question('Is it Brazil flag?', false, 'assets/flags/ca.png'),
