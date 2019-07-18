@@ -15,9 +15,11 @@ class Quiz extends StatelessWidget{
           children: <Widget>[
             new Text(
               'Question number 1',
+              textScaleFactor: 2.0,
             ),
             new Text(
               'Score: 0/0',
+              textScaleFactor: 1.3,
             ),
             new Container(
               width: MediaQuery.of(context).size.width / 1.3,
@@ -31,7 +33,8 @@ class Quiz extends StatelessWidget{
               ),
             ),
             new Text(
-              'Is it Belgium flag?'
+              'Is it Belgium flag?',
+              textScaleFactor: 1.5,
             ),
             new Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
