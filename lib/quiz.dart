@@ -40,7 +40,9 @@ class Quiz extends StatelessWidget{
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 new RaisedButton(
-                  onPressed: (){print('hello');},
+                  onPressed: (){
+                    alertFinish(context);
+                  },
                   color: Colors.blue,
                   textColor: Colors.white,
                   child: new Text(
@@ -108,6 +110,50 @@ class Quiz extends StatelessWidget{
               color: Colors.blue,
               textColor: Colors.white,
             )
+          ],
+        );
+      },
+    );
+  }
+
+  Future alertFinish(BuildContext context) async{
+
+    String title = 'Finish';
+
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context){
+        return new AlertDialog(
+          title: new Text(
+            title,
+            textAlign: TextAlign.center,
+            textScaleFactor: 1.2,
+          ),
+          contentPadding: EdgeInsets.all(10.0),
+          content: new Text
+          (
+            'You have 3 points on 5 questions',
+            textScaleFactor: 1.5,
+            textAlign: TextAlign.center,
+          ),
+          actions: <Widget>[
+            new FlatButton(
+              onPressed: (){
+                Navigator.pop(context);
+              },
+              child: new Text(
+                'Replay'
+              ),
+            ),
+            new FlatButton(
+              onPressed: (){
+                Navigator.pop(context);
+              },
+              child: new Text(
+                  'Back to Home page'
+              ),
+            ),
           ],
         );
       },
