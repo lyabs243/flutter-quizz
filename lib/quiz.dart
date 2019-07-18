@@ -1,9 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_quiz_app/question.dart';
+import 'main.dart';
 
 class Quiz extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return new Scaffold(
+      body: QuizPage(),
+    );
+  }
+
+}
+
+class QuizPage extends StatefulWidget{
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return new _QuizPage();
+  }
+
+}
+
+class _QuizPage extends State<QuizPage>{
+  List<Question> questions = [
+    new Question('Is it Belgium flag?', true, 'assets/flags/be.png'),
+    new Question('Is it Brazil flag?', false, 'assets/flags/ca.png'),
+    new Question('Is it Canada flag?', true, 'assets/flags/ca.png'),
+    new Question('Is it DRC flag?', true, 'assets/flags/cd.png'),
+    new Question('Is it Cameroon flag?', false, 'assets/flags/cg.png'),
+    new Question('Is it Syria flag?', false, 'assets/flags/eg.png'),
+    new Question('Is it Germany flag?', false, 'assets/flags/fr.png'),
+    new Question('Is it Senegal flag?', true, 'assets/flags/sn.png'),
+    new Question('Is it USA flag?', true, 'assets/flags/us.png'),
+    new Question('Is it Tanzania flag?', false, 'assets/flags/za.png'),
+  ];
+  int currentIndexQuestion = 0;
+  int points = 0;
+  int questionsPlayed = 0;
 
   @override
   Widget build(BuildContext context) {
+
     // TODO: implement build
     return new Scaffold(
       appBar: new AppBar(
@@ -14,11 +53,11 @@ class Quiz extends StatelessWidget{
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             new Text(
-              'Question number 1',
+              'Question number ${currentIndexQuestion+1}',
               textScaleFactor: 2.0,
             ),
             new Text(
-              'Score: 0/0',
+              'Score: $points / ${questionsPlayed}',
               textScaleFactor: 1.3,
             ),
             new Container(
@@ -27,13 +66,13 @@ class Quiz extends StatelessWidget{
               child: new Card(
                 elevation: 15.0,
                 child: Image.asset(
-                    'assets/flags/be.png',
+                  questions[currentIndexQuestion].assetPath,
                   fit: BoxFit.cover,
                 ),
               ),
             ),
             new Text(
-              'Is it Belgium flag?',
+              questions[currentIndexQuestion].description,
               textScaleFactor: 1.5,
             ),
             new Row(
@@ -41,7 +80,7 @@ class Quiz extends StatelessWidget{
               children: <Widget>[
                 new RaisedButton(
                   onPressed: (){
-                    alertFinish(context);
+                    checkResponse(questions[currentIndexQuestion], true);
                   },
                   color: Colors.blue,
                   textColor: Colors.white,
@@ -51,7 +90,7 @@ class Quiz extends StatelessWidget{
                 ),
                 new RaisedButton(
                   onPressed: (){
-                    dialogResponse(context, true);
+                    checkResponse(questions[currentIndexQuestion], false);
                   },
                   color: Colors.blue,
                   textColor: Colors.white,
@@ -67,6 +106,14 @@ class Quiz extends StatelessWidget{
     );
   }
 
+  void checkResponse(Question question,bool response) {
+    bool result = false;
+    if (question.valid == response) {
+      result = true;
+    }
+    dialogResponse(context, result);
+  }
+
   Future dialogResponse(BuildContext context,bool valid) async{
 
     String assetPath = 'assets/true.jpg';
@@ -74,9 +121,9 @@ class Quiz extends StatelessWidget{
     Color titleColor = Colors.green;
 
     if(!valid){
-        title = 'Failed';
-        assetPath = 'assets/false.jpg';
-        titleColor = Colors.red;
+      title = 'Failed';
+      assetPath = 'assets/false.jpg';
+      titleColor = Colors.red;
     }
 
     return showDialog(
@@ -103,6 +150,17 @@ class Quiz extends StatelessWidget{
             new RaisedButton(
               onPressed: (){
                 Navigator.pop(context);
+                setState(() {
+                  questionsPlayed++;
+                  if(valid)
+                    points++;
+                  if(currentIndexQuestion < questions.length-1) {
+                    currentIndexQuestion++;
+                  }
+                  else{
+                    alertFinish(context);
+                  }
+                });
               },
               child: new Text(
                 'Next',
@@ -132,8 +190,8 @@ class Quiz extends StatelessWidget{
           ),
           contentPadding: EdgeInsets.all(10.0),
           content: new Text
-          (
-            'You have 3 points on 5 questions',
+            (
+            'You have $points points on ${questions.length} questions',
             textScaleFactor: 1.5,
             textAlign: TextAlign.center,
           ),
@@ -141,14 +199,19 @@ class Quiz extends StatelessWidget{
             new FlatButton(
               onPressed: (){
                 Navigator.pop(context);
+                setState(() {
+                  currentIndexQuestion = 0;
+                  points = 0;
+                });
               },
               child: new Text(
-                'Replay'
+                  'Replay'
               ),
             ),
             new FlatButton(
               onPressed: (){
                 Navigator.pop(context);
+                backHome();
               },
               child: new Text(
                   'Back to Home page'
@@ -157,6 +220,17 @@ class Quiz extends StatelessWidget{
           ],
         );
       },
+    );
+  }
+
+  void backHome(){
+    Navigator.pushReplacement(
+      context,
+      new MaterialPageRoute(
+          builder: (BuildContext context){
+            return new MyApp();
+          }
+      ),
     );
   }
 
