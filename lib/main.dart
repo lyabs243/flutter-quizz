@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'quiz.dart';
 
 void main() => runApp(MyApp());
 
@@ -51,7 +52,14 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               new RaisedButton(
                 onPressed: (){
-                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                        builder: (BuildContext context){
+                          return new Quiz();
+                        }
+                    ),
+                  );
                 },
                 child: new Text('Start quiz'),
                 color: Colors.blue,
