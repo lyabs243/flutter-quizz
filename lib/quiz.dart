@@ -48,7 +48,9 @@ class Quiz extends StatelessWidget{
                   ),
                 ),
                 new RaisedButton(
-                  onPressed: (){print('hello');},
+                  onPressed: (){
+                    dialogResponse(context, true);
+                  },
                   color: Colors.blue,
                   textColor: Colors.white,
                   child: new Text(
@@ -60,6 +62,55 @@ class Quiz extends StatelessWidget{
           ],
         ),
       ),
+    );
+  }
+
+  Future dialogResponse(BuildContext context,bool valid) async{
+
+    String assetPath = 'assets/true.jpg';
+    String title = 'Congratulation!';
+    Color titleColor = Colors.green;
+
+    if(!valid){
+        title = 'Failed';
+        assetPath = 'assets/false.jpg';
+        titleColor = Colors.red;
+    }
+
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context){
+        return new SimpleDialog(
+          title: new Text(
+            title,
+            textAlign: TextAlign.center,
+            textScaleFactor: 1.2,
+            style: new TextStyle(
+              color: titleColor,
+            ),
+          ),
+          contentPadding: EdgeInsets.all(10.0),
+          children: <Widget>[
+            new Container(
+              child: Image.asset(
+                assetPath,
+              ),
+              margin: EdgeInsets.only(top: 10.0,bottom: 10.0),
+            ),
+            new RaisedButton(
+              onPressed: (){
+                Navigator.pop(context);
+              },
+              child: new Text(
+                'Next',
+              ),
+              color: Colors.blue,
+              textColor: Colors.white,
+            )
+          ],
+        );
+      },
     );
   }
 
