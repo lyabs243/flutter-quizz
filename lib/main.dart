@@ -52,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               new RaisedButton(
                 onPressed: (){
-                  Navigator.pushReplacement(
+                  Navigator.push(
                     context,
                     new MaterialPageRoute(
                         builder: (BuildContext context){

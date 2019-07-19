@@ -213,14 +213,7 @@ class _QuizPage extends State<Quiz>{
   }
 
   void backHome(){
-    Navigator.pushReplacement(
-      context,
-      new MaterialPageRoute(
-          builder: (BuildContext context){
-            return new MyApp();
-          }
-      ),
-    );
+    Navigator.pop(context);
   }
 
 }
